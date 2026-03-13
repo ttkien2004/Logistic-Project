@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: delivery_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app # Ánh xạ code để cập nhật realtime không cần build lại
+    environment:
+      - WATCHFILES_FORCE_POLLING=true # Giúp FastAPI reload tốt hơn trên Docker
+
+  frontend:
+    build: ./frontend
+    container_name: delivery_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app # Ánh xạ code để Vite tự động reload
+      - /app/node_modules # Tránh ghi đè node_modules từ máy host vào container
+    depends_on:
+      - backend
