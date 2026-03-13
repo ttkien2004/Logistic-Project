@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhosst:8000/api";
+
 const axiosClient = axios.create({
 	// URL của Backend FastAPI chạy qua Docker (hoặc localhost)
-	baseURL: "http://localhost:8000/api",
+	baseURL: API_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
